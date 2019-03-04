@@ -1,0 +1,241 @@
+USE [TICKET_MASTER]
+GO
+/****** Object:  Table [dbo].[Categorias]    Script Date: 01/03/2019 12:47:23 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Categorias](
+	[ID_Categorias] [int] NOT NULL,
+	[NombreCategoria] [varchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID_Categorias] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Conciertos]    Script Date: 01/03/2019 12:47:23 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Conciertos](
+	[ID_Conciertos] [int] NOT NULL,
+	[NombreConcierto] [varchar](20) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID_Conciertos] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CuentaCliente]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CuentaCliente](
+	[ID_CuentaCliente] [int] NOT NULL,
+	[Nombre] [varchar](50) NULL,
+	[ApPaterno] [varchar](35) NULL,
+	[ApMaterno] [varchar](35) NULL,
+	[Correo] [varchar](40) NULL,
+	[FechaDeNacimiento] [date] NULL,
+	[NombreCompleto]  AS (((([Nombre]+' ')+[ApPaterno])+' ')+[ApMaterno]),
+	[Edad]  AS (datediff(year,[FechaDeNacimiento],getdate())),
+PRIMARY KEY CLUSTERED 
+(
+	[ID_CuentaCliente] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[CuentaEmpleado]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[CuentaEmpleado](
+	[ID_CuentaEmpleado] [int] NOT NULL,
+	[Nombre] [varchar](50) NULL,
+	[ApPaterno] [varchar](35) NULL,
+	[ApMaterno] [varchar](35) NULL,
+	[FechaDeNacimiento] [date] NULL,
+	[NombreCompleto]  AS (((([Nombre]+' ')+[ApPaterno])+' ')+[ApMaterno]),
+	[Edad]  AS (datediff(year,[FechaDeNacimiento],getdate())),
+PRIMARY KEY CLUSTERED 
+(
+	[ID_CuentaEmpleado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Reporte]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Reporte](
+	[ID_Reporte] [int] NOT NULL,
+	[ContenidoReporte] [text] NULL,
+	[FECHA] [date] NULL,
+	[HORA] [time](7) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID_Reporte] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SEDE]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SEDE](
+	[ID_SEDE] [int] NOT NULL,
+	[NombreDeLaSEDE] [varchar](25) NULL,
+	[Estado] [varchar](20) NULL,
+	[Municipio] [varchar](20) NULL,
+	[Colonia] [varchar](20) NULL,
+	[Calle] [varchar](20) NULL,
+	[NumCasa] [int] NOT NULL,
+	[DireccionSEDE]  AS (((((((([Estado]+' ')+[Municipio])+' ')+[Colonia])+' ')+[Calle])+' ')+[NumCasa]),
+PRIMARY KEY CLUSTERED 
+(
+	[ID_SEDE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[SUCURSALES]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[SUCURSALES](
+	[ID_Sucursales] [int] NOT NULL,
+	[Estado] [varchar](20) NULL,
+	[Municipio] [varchar](20) NULL,
+	[Colonia] [varchar](20) NULL,
+	[Calle] [varchar](20) NULL,
+	[NumCasa] [int] NOT NULL,
+	[Direccion]  AS (((((((([Estado]+' ')+[Municipio])+' ')+[Colonia])+' ')+[Calle])+' ')+[NumCasa]),
+PRIMARY KEY CLUSTERED 
+(
+	[ID_Sucursales] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TipoDeReporte]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TipoDeReporte](
+	[ID_TipoDeReporte] [int] NOT NULL,
+	[NombreTipoDeReporte] [varchar](15) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID_TipoDeReporte] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TipoDeTicket]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TipoDeTicket](
+	[ID_TipoDeTicket] [uniqueidentifier] NOT NULL,
+	[NombreDeArea] [varchar](25) NULL,
+	[Costo] [money] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID_TipoDeTicket] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[VENTA]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[VENTA](
+	[ID_Venta] [int] NOT NULL,
+	[FechaVenta] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ID_Venta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Index [IDX_CONCIERTOS]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [IDX_CONCIERTOS] ON [dbo].[Categorias]
+(
+	[ID_Categorias] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [INDX_FechaNa]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [INDX_FechaNa] ON [dbo].[CuentaCliente]
+(
+	[FechaDeNacimiento] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [INDX_Nombre]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [INDX_Nombre] ON [dbo].[CuentaCliente]
+(
+	[Nombre] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ARITHABORT ON
+SET CONCAT_NULL_YIELDS_NULL ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+SET NUMERIC_ROUNDABORT OFF
+GO
+/****** Object:  Index [INDX_NombreCompleto]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [INDX_NombreCompleto] ON [dbo].[CuentaCliente]
+(
+	[NombreCompleto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IDX_BusquedaSEDE_id]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [IDX_BusquedaSEDE_id] ON [dbo].[SEDE]
+(
+	[ID_SEDE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ARITHABORT ON
+SET CONCAT_NULL_YIELDS_NULL ON
+SET QUOTED_IDENTIFIER ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+SET NUMERIC_ROUNDABORT OFF
+GO
+/****** Object:  Index [IDX_DireccionSEDE]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [IDX_DireccionSEDE] ON [dbo].[SEDE]
+(
+	[DireccionSEDE] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IDX_ID_SUCURSALES]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [IDX_ID_SUCURSALES] ON [dbo].[SUCURSALES]
+(
+	[ID_Sucursales] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+SET ANSI_PADDING ON
+GO
+/****** Object:  Index [IDX_LOCATION]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [IDX_LOCATION] ON [dbo].[SUCURSALES]
+(
+	[Estado] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+/****** Object:  Index [IDX_Venta]    Script Date: 01/03/2019 12:47:24 p. m. ******/
+CREATE NONCLUSTERED INDEX [IDX_Venta] ON [dbo].[VENTA]
+(
+	[FechaVenta] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
